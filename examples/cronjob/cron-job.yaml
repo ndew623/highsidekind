@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-job
+spec:
+  schedule: "*/2 * * * *" # run every two minutes
+  concurrencyPolicy: Forbid # default is Allow, Replace is also an option
+  jobTemplate: # the jobTemplate defines the job to be run
+    spec:
+      template:
+        spec:
+          containers:
+          - image: alpine # for this example we're not going to build a custom image, but you could
+            name: simple-job # the name of the docker container that will run in the Pod. it doesn't matter much what it is for this example.
+            # you can set a command for the container
+            # particularly useful here, as we are using a basic alpine image with no ENTRYPOINT or CMD set in its Dockerfile
+            command: ["/bin/sh", "-c"] # the ability to set a command for the Pod's container isn't unique to Job's. It's just useful for this simple example.
+            args: ["/bin/echo -n 'The job ran at '`/bin/date`'.\n'"] # this job will echo the phrase "The job ran at <date>."
+          restartPolicy: Never # the other option is Never, Never is the default

@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: simple-job
+spec:
+  template:
+    spec:
+      containers:
+      - image: alpine # for this example we're not going to build a custom image, but you could
+        name: simple-job # the name of the docker container that will run in the Pod. it doesn't matter much what it is for this example.
+        # you can set a command for the container
+        # particularly useful here, as we are using a basic alpine image with no ENTRYPOINT or CMD set in its Dockerfile
+        command: ["echo"] # the ability to set a command for the Pod's container isn't unique to Job's. It's just useful for this simple example.
+        args: ["The job ran."] # this job will just echo the phrase "The job ran.". If it works, the message should appear in the Pod's logs
+      restartPolicy: Never # this is the default for restartPolicy. OnFailure is the other option.
