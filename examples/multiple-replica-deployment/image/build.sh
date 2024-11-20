@@ -1,0 +1,1 @@
+docker build -t multiple-replica-deployment:1.0 .
