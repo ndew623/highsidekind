@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key-Value Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 400px;
+        }
+
+        form input {
+            margin: 5px 0;
+            padding: 5px;
+            width: calc(100% - 12px);
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .response pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Key-Value Manager</h1>
+
+    <!-- Form for Create/Update -->
+    <form id="key-value-form">
+        <label for="key">Key:</label>
+        <input type="text" id="key" required>
+
+        <label for="value">Value:</label>
+        <input type="text" id="value" required>
+
+        <button type="submit">Create/Update</button>
+    </form>
+
+    <!-- Read/Delete Buttons -->
+    <form id="key-actions">
+        <label for="read-key">Key:</label>
+        <input type="text" id="read-key" placeholder="Enter key for read/delete">
+
+        <button type="button" id="read-button">Read</button>
+        <button type="button" id="delete-button">Delete</button>
+    </form>
+
+    <!-- Response Display -->
+    <div class="response" id="response-box">
+        <strong>Response:</strong>
+        <pre id="response-text">No response yet.</pre>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:5000"; // Adjust if your Flask server uses a different address/port
+
+        // Elements
+        const keyValueForm = document.getElementById('key-value-form');
+        const keyActionsForm = document.getElementById('key-actions');
+        const responseBox = document.getElementById('response-box');
+        const responseText = document.getElementById('response-text');
+
+        // Utility: Display server response
+        function showResponse(data) {
+            responseText.textContent = JSON.stringify(data, null, 2);
+        }
+
+        // Create/Update Key-Value Pair
+        keyValueForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const key = document.getElementById('key').value.trim();
+            const value = document.getElementById('value').value.trim();
+
+            try {
+                const response = await fetch(`${API_URL}/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key, value }),
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showResponse({ error: 'Failed to create/update key-value pair' });
+            }
+        });
+
+        // Read Key-Value Pair
+        document.getElementById('read-button').addEventListener('click', async () => {
+            const key = document.getElementById('read-key').value.trim();
+
+            try {
+                const response = await fetch(`${API_URL}/read/${key}`);
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showResponse({ error: 'Failed to fetch key-value pair' });
+            }
+        });
+
+        // Delete Key-Value Pair
+        document.getElementById('delete-button').addEventListener('click', async () => {
+            const key = document.getElementById('read-key').value.trim();
+
+            try {
+                const response = await fetch(`${API_URL}/delete/${key}`, {
+                    method: 'DELETE',
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showResponse({ error: 'Failed to delete key-value pair' });
+            }
+        });
+    </script>
+</body>
+</html>
