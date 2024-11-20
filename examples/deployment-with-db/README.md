@@ -8,3 +8,5 @@ To build the docker images, run `./build.sh` in their respective directories. Yo
 The manifests directory contains YAML to deploy these components in a kind cluster.
 
 Upon success, you should be able to navigate to the endpoint defined in the Service manifest with your web browser.
+
+The deployment should be accessible on port 30003 (the specified `nodePort` in the frontend manifest) on the machine running the cluster.

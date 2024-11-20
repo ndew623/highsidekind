@@ -32,5 +32,5 @@ spec:
   - name: http # you only really need to name the ports if you have multiple on a service.
     port: 80 # port the Service is accessible on inside the cluster
     targetPort: 80 # port the Service will point to on the container, doesn't have to be the same as the port above. but should match what the container is using.
-    nodePort: 30001 # the nodePort option is specific to NodePort services. in our case, it should match one of the forwarded ports in the kind config file
+    nodePort: 30003 # the nodePort option is specific to NodePort services. in our case, it should match one of the forwarded ports in the kind config file
     # a full explanation of Service types and NodePort services is too much for comments. recommend further research.
