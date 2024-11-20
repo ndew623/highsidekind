@@ -58,7 +58,7 @@
 </head>
 <body>
     <h1>Key-Value Manager</h1>
-
+    <p>You can read and write key value pairs to the backend postgres database using the UI below.</p>
     <!-- Form for Create/Update -->
     <form id="key-value-form">
         <label for="key">Key:</label>
@@ -67,7 +67,7 @@
         <label for="value">Value:</label>
         <input type="text" id="value" required>
 
-        <button type="submit">Create/Update</button>
+        <button type="submit">Create</button>
     </form>
 
     <!-- Read/Delete Buttons -->
@@ -86,7 +86,7 @@
     </div>
 
     <script>
-        const API_URL = "http://127.0.0.1:5000"; // Adjust if your Flask server uses a different address/port
+        const API_URL = "http://"+window.location.host+"/api";
 
         // Elements
         const keyValueForm = document.getElementById('key-value-form');

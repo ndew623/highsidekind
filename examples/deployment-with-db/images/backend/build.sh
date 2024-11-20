@@ -1,1 +1,1 @@
-docker build -t backend-db-deployment .
+docker build -t backend-db-deployment:1.0 .

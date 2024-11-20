@@ -1,7 +1,9 @@
 FROM python
 
-RUN pip install flask flask-sqlalchemy psycopg2-binary python-dotvenv
+RUN pip install flask flask-sqlalchemy psycopg2-binary python-dotenv
 
 COPY app.py /app.py
 
-ENTRYPOINT ["/bin/bash", "-c", "python", "/app.py"]
+EXPOSE 8080
+
+ENTRYPOINT ["python", "/app.py"]

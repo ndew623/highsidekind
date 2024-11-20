@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+# a deployment label is optional, it can group multiple deployments together
+# for example, kubectl can delete multiple deployments at once if they have the same label
+  labels:
+    app: backend-db-deployment # optional, see above comment
+  name: backend-db-deployment # name of deployment
+spec:
+  replicas: 1 # how many pods to create and maintain
+  selector:
+    matchLabels:
+      app: backend-db-deployment # pods with this label will be managed by this deployment (see label in template below)
+  template: # this template is for pods that the deployment will create
+    metadata:
+      labels:
+        app: backend-db-deployment # both the deployment and the service use this label to find their pods
+    spec:
+      containers:
+      - image: backend-db-deployment:1.0 # name of the image to run, the node the Pod runs on will need this image loaded or need to be able to docker pull it
+        name: backend-db-deployment # name of the container that docker creates. in most cases it doesn't matter too much what it is.
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: ThePassword
+        - name: POSTGRES_HOST
+          # internal k8s dns resolves service name to internal ip.
+          # works when target service is in the same namespace. otherwise you'd need the "full" url:
+          # postgres-db-service.targetnamespace.svc.cluster.local
+          value: postgres-db-service
+        - name: POSTGRES_PORT
+          value: "5432" # detail of yaml. in quotes to make it interpret as a string instead of a number.
+        - name: POSTGRES_DB
+          value: postgres
+--- # you can put multiple manifests in one file if you separate them with "---"
+apiVersion: v1
+kind: Service # The Deployment makes Pods, but they need a Service to be accessible from outside the cluster
+metadata:
+  name: backend-db-service
+spec:
+  # ClusterIP services are available from inside the cluster. In our case the frontend service will access this backend one.
+  # See the comments in the backend's Dockerfile.
+  type: ClusterIP
+  selector:
+    app: backend-db-deployment # this should match the label in the pod template above
+  ports:
+  - name: http # you only really need to name the ports if you have multiple on a service.
+    port: 5050 # port the Service is accessible on from inside the cluster
+    targetPort: 8080 # port the Service will point to on the container, must match port used by the container the Service points to

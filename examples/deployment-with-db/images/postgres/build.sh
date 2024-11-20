@@ -1,1 +1,1 @@
-docker build -t postgres-db-deployment .
+docker build -t postgres-db-deployment:1.0 .
