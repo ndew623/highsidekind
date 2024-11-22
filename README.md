@@ -7,7 +7,7 @@ All of the Kubernetes manifests are commented with details on the purpose of eac
 # Awetomaton Coder Instructions
 
 ## Initial setup
-- Once in coder, create a new workspace.
+- Once in coder, create a new workspace from the "Develop in Kuberntes" template.
 - The name is not important. The default options for CPU, disk size, and memory are fine.
 - Open a terminal in the new environment after it builds.
 - If you run `kubectl get all` you see should a number of Pods and some `Error from server (Forbidden)` messages.
