@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+# a deployment label is optional, it can group multiple deployments together
+# for example, kubectl can delete multiple deployments at once if they have the same label
+  labels:
+    app: multiple-replica-deployment # optional, see above comment
+  name: multiple-replica-deployment # name of deployment
+spec:
+  replicas: 1 # how many pods to create and maintain, this is the value to be overridden by kustomize
+  selector:
+    matchLabels:
+      app: multiple-replica-deployment # pods with this label will be managed by this deployment (see label in template below)
+  template: # this template is for pods that the deployment will create
+    metadata:
+      labels:
+        app: multiple-replica-deployment # both the deployment and the service use this label to find their pods
+    spec:
+      containers:
+      - image: multiple-replica-deployment:1.0 # name of the image to run, the node the Pod runs on will need this image loaded or need to be able to docker pull it
+        name: multiple-replica-deployment # name of the container that docker creates. in most cases it doesn't matter too much what it is.
+--- # you can put multiple manifests in one file if you separate them with "---"
+apiVersion: v1
+kind: Service # The Deployment makes Pods, but they need a Service to be accessible from outside the cluster
+metadata:
+  name: multiple-replica-service
+spec:
+  type: NodePort # this will work for the kind cluster, but you often wouldn't choose NodePort in "real" clusters
+  selector:
+    app: multiple-replica-deployment # this should match the label in the pod template above
+  ports:
+  - name: http # you only really need to name the ports if you have multiple on a service.
+    port: 80 # port the Service is accessible on inside the cluster, not very important for this NodePort service
+    targetPort: 5000 # port the Service will point to on the container, doesn't have to be the same as the port above. but should match what the container is using.
+    nodePort: 30002 # the nodePort option is specific to NodePort services. in our case, it should match one of the forwarded ports in the kind config file
+    # a full explanation of Service types and NodePort services is too much for comments. recommend further research.

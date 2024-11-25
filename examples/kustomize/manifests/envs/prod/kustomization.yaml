@@ -1,0 +1,7 @@
+resources:
+- ../../base # path to the base manifests to be "kustomized"
+patches: # list of all patches to be applied. we only have one, but we could have many
+- path: patches.yaml # path to a patch file
+  target: # the info in target determines what the settings in patches.yaml get applied to
+    kind: Deployment # kind and name here match the resource we want to apply patches.yaml to
+    name: multiple-replica-deployment # there are other valid target fields than name and kind if you want to match using different criteria.
