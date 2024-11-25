@@ -1,0 +1,2 @@
+resources:
+- multiple-replica-deployment.yaml

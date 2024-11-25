@@ -1,0 +1,6 @@
+apiVersion: apps/v1
+kind: Deployment # "kind" must be here, but it's value doesn't matter because we included a target property in ./kustomization.yaml
+metadata:
+  name: multiple-replica-deployment # likewise overriddent by the target property. but "name" must be here.
+spec:
+  replicas: 7
