@@ -1,0 +1,8 @@
+# this patch changes the number of replicas
+# because kustomize runs second (i.e. on the output of helm), it will also overwrite any values.yaml files
+apiVersion: apps/v1
+kind: any-value-here # unused, already have target field in kustomization.yaml
+metadata:
+  name: any-value-here # unused, already have target field in kustomization.yaml
+spec:
+  replicas: 10

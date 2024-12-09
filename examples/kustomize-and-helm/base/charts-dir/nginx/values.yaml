@@ -1,0 +1,2 @@
+# this values.yaml file defines the chart's default values
+numReplicas: 3

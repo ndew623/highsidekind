@@ -1,0 +1,6 @@
+resources:
+- ../../base
+patches:
+- path: label-patch.yaml # patch that adds "environment: dev" label
+  target:
+    kind: Deployment

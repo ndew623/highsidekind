@@ -1,0 +1,2 @@
+#anything here will override the defaults from the values.yaml inside the chart
+numReplicas: 4 # the default value set in the chart is 3

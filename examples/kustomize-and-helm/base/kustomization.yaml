@@ -1,0 +1,6 @@
+helmGlobals:
+  chartHome: charts-dir
+helmCharts:
+- name: nginx
+  valuesFile: values.yaml # set a values.yaml file for the helm chart
+  releaseName: kustomize-helm-nginx
