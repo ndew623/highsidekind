@@ -1,0 +1,10 @@
+resources:
+- ../../base
+patches: # specifies 2 patches
+- path: label-patch.yaml # patch that adds "environment: prod" label
+  target:
+    kind: Deployment
+- path: replica-patch.yaml # this patch changes the number of replicas
+  target:
+    kind: Deployment
+    name: nginx
