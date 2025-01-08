@@ -15,4 +15,4 @@ kind create cluster --config=./mnp-k8s-examples/kind/kind-config.yaml
 
 kubectl cluster-info --context kind-kind
 
-kubectl create ns coder-ext
+kubectl create ns coder
