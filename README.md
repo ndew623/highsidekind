@@ -43,3 +43,10 @@ When you build any image in the examples directory, you have two options to make
 
 1. `docker push` those images to a repository that the kind cluster's nodes can `docker pull` from
 2. `kind load docker-image <image-name:tag>` to load those images directly into the kind cluster
+
+# After Restarting Workspace
+Files are preserved in a workspace after stopping and restarting, but installed software is not. You can run the `reinstall-kind.sh` script either from the `mnp-k8s-examples/` folder or with:
+```
+curl -L https://raw.githubusercontent.com/ndew623/highsidekind/refs/heads/awtmtncoder/reinstall-kind.sh | bash
+```
+The `reinstall-kind.sh` script will reinstall kind and re-create the cluster. It must be run everytime you restart the workspace if you wish to keep using it for a kind cluster.
