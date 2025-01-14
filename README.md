@@ -20,7 +20,7 @@ curl -L https://raw.githubusercontent.com/ndew623/highsidekind/refs/heads/awtmtn
 
 ## Deploying and accessing a website on your test cluster
 - If you followed the instructions above, your environment should have new folder called a `mnp-k8s-examples/` in it.
-- In the terminal: `cd mnp-k8s-examples/examples/simple-deployment/image`.
+- In the terminal, starting from `/home/coder`: `cd mnp-k8s-examples/examples/simple-deployment/image`.
 - Run `./build.sh` to both build the image for the website and load it into the test cluster.
 - From the `image/` directory `cd ../manifests`.
 - You can then run `kubectl apply -f simple-deployment.yaml`
