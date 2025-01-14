@@ -7,13 +7,7 @@ set -euxo pipefail
 chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 
-git clone https://github.com/ndew623/highsidekind.git
-
-mv highsidekind mnp-k8s-examples
-
-cd mnp-k8s-examples && git switch awtmtncoder && cd ..
-
-kind create cluster --config=./mnp-k8s-examples/kind/kind-config.yaml
+kind create cluster --config="/home/coder/mnp-k8s-examples/kind/kind-config.yaml"
 
 kubectl cluster-info --context kind-kind
 
